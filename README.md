@@ -10,6 +10,10 @@ You can install the package via pip:
 ```bash
 pip install aigf_python
 ```
+or
+```bash
+pip install git+https://github.com/zardamhussain/aigf_python.git
+```
 
 On Mac, you might need to install `brew install portaudio` to satisfy `pyaudio`'s dependency requirement.
 
