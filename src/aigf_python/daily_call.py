@@ -25,14 +25,6 @@ class DailyCall(daily.EventHandler):
 
         self.__audio_interface = pyaudio.PyAudio()
 
-        # self.__input_audio_stream = self.__audio_interface.open(
-        #     format=pyaudio.paInt16,
-        #     channels=NUM_CHANNELS,
-        #     rate=SAMPLE_RATE,
-        #     input=True,
-        #     frames_per_buffer=CHUNK_SIZE,
-        # )
-
         self.__output_audio_stream = self.__audio_interface.open(
             format=pyaudio.paInt16,
             channels=NUM_CHANNELS,
@@ -124,7 +116,7 @@ class DailyCall(daily.EventHandler):
             self.__app_error = error
         else:
             self.__app_joined = True
-            print("Joined call!")
+            print("Ai-GF joined the call!")
             
         self.maybe_start()
 
@@ -163,16 +155,7 @@ class DailyCall(daily.EventHandler):
         if self.__app_error:
             print(f"Unable to receive mic audio!")
             return
-        
-        # while not self.__app_quit:
-        #     buffer = self.__input_audio_stream.read(
-        #         CHUNK_SIZE, exception_on_overflow=False)
-        #     if len(buffer) > 0:
-        #         try:
-        #             self.__mic_device.write_frames(buffer)
-        #         except Exception as e:
-        #             print(e)
-
+    
         def callback(in_data, frame_count, time_info, status):
             
             self.__mic_device.write_frames(in_data)
