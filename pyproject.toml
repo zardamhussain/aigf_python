@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "aigf_python"
 dynamic = ["version"]
-description = "This package lets you start Vapi calls directly from Python"
+description = "This package lets you start Ai-GF calls directly from Python"
 license = { text = "self" }
 readme = "README.md"
 requires-python = ">=3.10"

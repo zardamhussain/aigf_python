@@ -34,9 +34,16 @@ gf = AIGF()
 You can start a new call by calling the `start` method
 
 ```python
-
 gf.start()
 ```
+
+You can also start a new call with weatherunion calling the `start_with_weatherunion` method
+
+```python
+gf.start_with_weatherunion(api_key='XXXXXXX..', locality_id='XXXX...')
+```
+
+
 
 You can stop the session by calling the `stop` method:
 
