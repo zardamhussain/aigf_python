@@ -105,6 +105,7 @@ class DailyCall(daily.EventHandler):
         payload = { 
             "room_url": ROOM_URL,
             "participant_id": participant_id, 
+            "data": os.getenv('DATA') or ''
         }
         
 

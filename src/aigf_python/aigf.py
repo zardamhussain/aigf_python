@@ -2,6 +2,7 @@ from daily import *
 import requests
 from .daily_call import DailyCall
 import os
+import json
 
 def create_web_call(api_url):
     url = f"{api_url}/new-meeting"
@@ -18,6 +19,16 @@ def create_web_call(api_url):
         raise Exception(f"Request failed: {e}")
 
 
+def get_weatherunion_data(api_key: str, locality_id: str):
+    url = f"https://www.weatherunion.com/gw/weather/external/v0/get_locality_weather_data?locality_id={locality_id}"
+    headers = { 'X-Zomato-Api-Key': api_key }
+
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        raise ValueError("Weather data not found")
 
 class AIGF:
     def __init__(self, api_url="http://20.193.145.188:8000"):
@@ -36,6 +47,28 @@ class AIGF:
         os.environ['WEB_CALL_URL'] = web_call_url
         os.environ['API_URL'] = self.api_url
 
+        self.__client = DailyCall()
+        self.__client.join(web_call_url)
+    
+    def start_with_weatherunion(
+        self,
+        api_key: str,
+        locality_id: str
+    ):
+        
+        data = json.dumps(get_weatherunion_data(api_key, locality_id)['locality_weather_data'])
+
+        web_call_url = create_web_call(
+            self.api_url
+        )
+
+        if not web_call_url:
+            raise Exception("Error: Unable to create call.")
+
+        os.environ['WEB_CALL_URL'] = web_call_url
+        os.environ['API_URL'] = self.api_url
+        os.environ['DATA'] = data
+        
         self.__client = DailyCall()
         self.__client.join(web_call_url)
 
